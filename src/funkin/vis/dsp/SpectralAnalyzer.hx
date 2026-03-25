@@ -222,7 +222,7 @@ class SpectralAnalyzer
 
 		var range = 256;
         var freqs = fft.calcFreq(signal);
-		var bars = vis.makeLogGraph(freqs, barCount + 1, Math.floor(maxDb - minDb), range, fftN, audioClip.audioBuffer.sampleRate, minFreq, maxFreq);
+		var bars = vis.makeLogGraph(freqs, barCount + 1, Math.floor(maxDb - minDb), range, audioClip.audioBuffer.sampleRate, minFreq, maxFreq);
 
         if (bars.length - 1 > barHistories.length) {
             barHistories.resize(bars.length - 1);
@@ -264,7 +264,6 @@ class SpectralAnalyzer
         #end
 	}
 
-    // Prevents a memory leak by reusing array
     var _buffer:Array<Float> = [];
 	function getSignal(data:lime.utils.UInt8Array, bitsPerSample:Int):Array<Float>
     {
