@@ -214,17 +214,21 @@ class SpectralAnalyzer
         var range = 256;
         var freqs = fft.calcFreq(signal);
         
-        // FIXED: Removed 'fftN' as it is not part of the current grig.audio makeLogGraph signature.
+        /* * FIX 1: Removed 'fftN' from makeLogGraph. 
+         * The library signature is: makeLogGraph(freqs, count, dbRange, range, sampleRate, minFreq, maxFreq)
+         */
         var bars = vis.makeLogGraph(freqs, barCount + 1, Math.floor(maxDb - minDb), range, audioClip.audioBuffer.sampleRate, minFreq, maxFreq);
 
-        var len:Int = bars.length - 1;
+        /* * FIX 2: Explicitly cast the length to Int to stop the "Float should be Int" chain reaction.
+         */
+        var barLen:Int = Std.int(bars.length - 1);
 
-        if (len > barHistories.length) {
-            barHistories.resize(len);
+        if (barLen > barHistories.length) {
+            barHistories.resize(barLen);
         }
 
-        levels.resize(len);
-        for (i in 0...len) {
+        levels.resize(barLen);
+        for (i in 0...barLen) {
 
             if (barHistories[i] == null) barHistories[i] = new RecentPeakFinder();
             var recentValues = barHistories[i];
