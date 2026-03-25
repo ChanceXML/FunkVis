@@ -214,7 +214,7 @@ class SpectralAnalyzer
         var range = 256;
         var freqs = fft.calcFreq(signal);
         
-        var bars = vis.makeLogGraph(freqs, barCount + 1, audioClip.audioBuffer.sampleRate, minFreq, maxFreq);
+        var bars = vis.makeLogGraph(freqs, barCount + 1, Std.int(maxDb - minDb), audioClip.audioBuffer.sampleRate, minFreq, maxFreq);
 
         var barLen:Int = Std.int(bars.length - 1);
 
